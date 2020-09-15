@@ -15,10 +15,10 @@ maxStake=stake+(stake*percentLimit)
 
 days=30
 day=1
-totalLost=0
-totalWon=0
 daysWon=0
 daysLost=0
+storeDaysWon={}
+storeDaysLost={}
 
 while day <= days:
     
@@ -37,22 +37,18 @@ while day <= days:
         else:
             amount=amount+bet
             wonPerDay=wonPerDay+1
-    if wonPerDay > lostPerDay:
-        daysWon=daysWon+1 
-    else: 
-        daysLost=daysLost+1
-    
-    totalLost=totalLost+lostPerDay
-    totalWon=totalWon+wonPerDay
+    storeDaysWon[day]=wonPerDay
+    storeDaysLost[day]=lostPerDay
+
     day=day+1
 
-diffAmount = totalWon - totalLost
 
-print("Number of days won",daysWon, "Number of days lost",daysLost,"in 30 days")
+print(storeDaysLost)
+print(storeDaysWon)
+luckyDay=max(storeDaysWon, key=storeDaysWon.get)
+unLuckyDay=max(storeDaysLost, key=storeDaysLost.get)
 
-if diffAmount>0:
-    print("profit for overall month:",diffAmount )
-elif diffAmount<0:
-    print("loss for overall month:",abs(diffAmount))
-else:
-    print("Neither loss nor profit",diffAmount)
+print("The luckiest day in the month is",luckyDay,"with profit",storeDaysWon[luckyDay])
+print("The Un-luckiest day in the month is",unLuckyDay,"with loss",storeDaysLost[unLuckyDay])
+
+

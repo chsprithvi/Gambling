@@ -1,6 +1,7 @@
 """
 A player with stake $100 and who bets $1 for each game.
-Displaying the total Winning and Loosing amount for 20 days.
+Displaying the total Winning and Loosing days for each month.
+Considering profit or loss for a month
 """
 import random 
 stake=100
@@ -12,7 +13,7 @@ percentLimit=0.5
 minStake=stake-(stake*percentLimit)
 maxStake=stake+(stake*percentLimit)
 
-days=20
+days=30
 day=1
 totalLost=0
 totalWon=0
@@ -36,9 +37,22 @@ while day <= days:
         else:
             amount=amount+bet
             wonPerDay=wonPerDay+1
-    print("Won on",day,"is",wonPerDay,"lost on",day,"is",lostPerDay)
+    if wonPerDay > lostPerDay:
+        daysWon=daysWon+1 
+    else: 
+        daysLost=daysLost+1
+    
     totalLost=totalLost+lostPerDay
     totalWon=totalWon+wonPerDay
     day=day+1
-print("Total won for",days,"is",totalWon,"Total lost for",days,"is",totalLost)
 
+diffAmount = totalWon - totalLost
+
+print("Number of days won",daysWon, "Number of days lost",daysLost,"in 30 days")
+
+if diffAmount>0:
+    print("profit for overall month:",diffAmount )
+elif diffAmount<0:
+    print("loss for overall month:",abs(diffAmount))
+else:
+    print("Neither loss nor profit",diffAmount)
